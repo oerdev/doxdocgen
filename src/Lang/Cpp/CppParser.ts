@@ -355,10 +355,16 @@ export default class CppParser implements ICodeParser {
                 if (this.casingType !== CasingType.uncertain) {
                     this.specialCase = SpecialCase.setter;
                 }
+
             } else if (methodName.toLowerCase().startsWith("create")) {
                 this.casingType = CppParser.checkCasing(methodName, 6);
                 if (this.casingType !== CasingType.uncertain) {
                     this.specialCase = SpecialCase.factoryMethod;
+                }
+            } else {
+                this.casingType = CppParser.checkCasing(methodName, 0);
+                if (this.casingType !== CasingType.uncertain) {
+                    this.specialCase = SpecialCase.normal;
                 }
             }
         }

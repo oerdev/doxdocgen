@@ -1,6 +1,4 @@
 import { workspace } from "vscode";
-// tslint:disable:max-classes-per-file
-// tslint:disable:max-line-length
 
 class C {
     public static getConfiguration() {
@@ -9,11 +7,12 @@ class C {
 
     public triggerSequence: string = "/**";
     public firstLine: string = "/**";
-    public commentPrefix: string = " * ";
+    public commentPrefix: string = " *";
     public lastLine: string = " */";
-    public getterText: string = "Get the {name} object";
-    public setterText: string = "Set the {name} object";
+    public getterText: string = "Get {name}";
+    public setterText: string = "Set {name}";
     public factoryMethodText: string = "Create a {name} object";
+    public normalText: string = "{name}";
 }
 
 class Cpp {
@@ -22,8 +21,8 @@ class Cpp {
     }
 
     public tparamTemplate: string = "@tparam {param} ";
-    public ctorText: string = "Construct a new {name} object";
-    public dtorText: string = "Destroy the {name} object";
+    public ctorText: string = "{name} Constructer";
+    public dtorText: string = "{name} Destructor";
 }
 
 class File {
@@ -45,9 +44,9 @@ class Generic {
 
     public includeTypeAtReturn: boolean = true;
     public boolReturnsTrueFalse: boolean = true;
-    public briefTemplate: string = "@brief {text}";
-    public paramTemplate: string = "@param {param} ";
-    public returnTemplate: string = "@return {type} ";
+    public briefTemplate: string = " @brief {text}";
+    public paramTemplate: string =  " @param {param}";
+    public returnTemplate: string = " @return {type}";
     public linesToGet: number = 20;
     public authorName: string = "your name";
     public authorEmail: string = "you@domain.com";
@@ -69,6 +68,7 @@ export class Config {
         values.C.lastLine = C.getConfiguration().get<string>("lastLine", values.C.lastLine);
         values.C.getterText = C.getConfiguration().get<string>("getterText", values.C.getterText);
         values.C.setterText = C.getConfiguration().get<string>("setterText", values.C.setterText);
+        values.C.normalText = C.getConfiguration().get<string>("normalText", values.C.normalText);
         values.C.factoryMethodText = C.getConfiguration().get<string>("factoryMethodText", values.C.factoryMethodText);
 
         values.Cpp.tparamTemplate = Cpp.getConfiguration().get<string>("tparamTemplate", values.Cpp.tparamTemplate);

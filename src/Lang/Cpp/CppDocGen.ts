@@ -13,6 +13,7 @@ export enum SpecialCase {
     destructor,
     getter,
     setter,
+    normal,
     factoryMethod,
 }
 
@@ -191,6 +192,11 @@ export class CppDocGen implements IDocGen {
             case SpecialCase.getter: {
                 val = this.splitCasing(this.func.name.trim()).trim().substr(3).trim();
                 text = this.cfg.C.getterText;
+                break;
+            }
+            case SpecialCase.normal: {
+                val = this.splitCasing(this.func.name.trim()).trim().substr(0).trim();
+                text = this.cfg.C.normalText;
                 break;
             }
             case SpecialCase.setter: {
@@ -420,7 +426,7 @@ export class CppDocGen implements IDocGen {
                     break;
                 }
                 case "empty": {
-                    lines.push("");
+                    //lines.push("");
                     break;
                 }
                 case "tparam": {
@@ -509,6 +515,8 @@ export class CppDocGen implements IDocGen {
             }
             case CasingType.camel: {
                 txt = txt.replace(/([a-zA-Z0-9])(?=[A-Z])/g, "$1 ");
+                txt = txt.toLowerCase();
+                txt = txt.charAt(0).toUpperCase() + txt.slice(1);
                 vals.push(txt);
                 break;
             }
