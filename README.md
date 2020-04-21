@@ -1,6 +1,6 @@
 # Generate Doxygen Comments in VS Code
 
-This VS Code Extensions provides Doxygen Documentation generation on the fly by starting a Doxygen comment block and pressing enter.
+This VS Code Extensions provides Doxygen Documentation, built by updating doxdocgen by christophschlosser, generation on the fly by starting a Doxygen comment block and pressing enter.
 
 [![Build Status](https://travis-ci.org/christophschlosser/doxdocgen.svg?branch=master)](https://travis-ci.org/christophschlosser/doxdocgen)
 [![Build status](https://ci.appveyor.com/api/projects/status/4h84071p9tv0y9r6?svg=true)](https://ci.appveyor.com/project/christophschlosser/doxdocgen)
