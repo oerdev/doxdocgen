@@ -2,10 +2,10 @@ import { Position, TextDocumentContentChangeEvent, TextEditor, TextLine, workspa
 import ICodeParser from "../../Common/ICodeParser";
 import { IDocGen } from "../../Common/IDocGen";
 import { Config } from "../../Config";
-import { CppArgument } from "./CppArgument";
+import { CppArgument } from './CppArgument';
 import { CasingType, CommentType, CppDocGen, SpecialCase } from "./CppDocGen";
 import { CppParseTree } from "./CppParseTree";
-import { CppToken, CppTokenType } from "./CppToken";
+import { CppToken, CppTokenType } from './CppToken';
 
 /**
  *
@@ -345,7 +345,10 @@ export default class CppParser implements ICodeParser {
         if (args[0].name !== null) {
             const methodName = args[0].name;
 
-            if (methodName.toLowerCase().startsWith("get")) {
+            console.log(methodName.toLowerCase());
+            if (methodName.includes("::")) {
+                this.specialCase = SpecialCase.defination;
+            } else if (methodName.toLowerCase().startsWith("get")) {
                 this.casingType = CppParser.checkCasing(methodName, 3);
                 if (this.casingType !== CasingType.uncertain) {
                     this.specialCase = SpecialCase.getter;
@@ -506,6 +509,9 @@ export default class CppParser implements ICodeParser {
 
             func.name = (func.type.nodes[0] as CppToken).value;
             func.type.nodes = [];
+        } else if(func.name.includes("::")) {
+            func.name = func.name.split("::")[1];
+            return [func, []];
         }
 
         // Get arguments list as a CppParseTree and create arguments from them.
@@ -699,10 +705,11 @@ export default class CppParser implements ICodeParser {
                     throw new Error("Too many non keyword symbols.");
                 }
             }
-
             argument.type.nodes.push(node);
         }
-
+        if(argument.name.includes("::")) {
+            argument.type.nodes.pop();
+        }
         this.StripNonTypeNodes(argument.type);
         return argument;
     }

@@ -14,6 +14,7 @@ export enum SpecialCase {
     getter,
     setter,
     normal,
+    defination,
     factoryMethod,
 }
 
@@ -207,6 +208,12 @@ export class CppDocGen implements IDocGen {
             case SpecialCase.factoryMethod: {
                 val = this.splitCasing(this.func.name.trim()).trim().substr(6).trim();
                 text = this.cfg.C.factoryMethodText;
+                break;
+            }
+            case SpecialCase.defination: {
+                this.func.name = this.func.name.split("::")[1];
+                val = this.splitCasing(this.func.name.trim()).trim().substr(0).trim();
+                text = this.cfg.C.normalText;
                 break;
             }
             case SpecialCase.none:
